@@ -1,5 +1,7 @@
 package cjl_magistri;
 
+import java.util.regex.Pattern;
+
 /**
  * Created with IntelliJ IDEA.
  * User: larry
@@ -8,13 +10,15 @@ package cjl_magistri;
  * To change this template use File | Settings | File Templates.
  */
 public class LoremIpsumText {
-    private final String _source;
+    private final String[] _source;
+    private final IntGenerator _intGenerator;
 
-    public LoremIpsumText(String textSource, IntGenerator mockGenerator) {
-        _source = textSource;
+    public LoremIpsumText(String textSource, IntGenerator intGenerator) {
+        _source = textSource.split("\\s+");
+        _intGenerator = intGenerator;
     }
 
     public String nextWord() {
-        return _source;
+        return _source[_intGenerator.nextInt(_source.length)];
     }
 }

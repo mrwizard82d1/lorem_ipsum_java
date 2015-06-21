@@ -31,13 +31,32 @@ public class LoremIpsumTextTest {
     }
 
     @Test
-    public void getWord_ManyWordsReverseSequencer_ReturnsReversedSequence() {
+    public void getWord_ManyWordsReverseSequencer_ReturnsLastOnFirstCall() {
+        List<String> words = new ArrayList<String>(Arrays.asList(new String[]{"lorem", "ipsum", "dolor"}));
+        IntGenerator mockGenerator = mock(IntGenerator.class);
+        when(mockGenerator.nextInt(3)).thenReturn(2);
+        LoremIpsumText cut = new LoremIpsumText(StringUtils.join(words, ' '), mockGenerator);
+        assertThat(words.get(2), equalTo(cut.nextWord()));
+    }
+
+    @Test
+    public void getWord_ManyWordsReverseSequencer_ReturnsMiddleOnSecondCall() {
+        List<String> words = new ArrayList<String>(Arrays.asList(new String[]{"lorem", "ipsum", "dolor"}));
+        IntGenerator mockGenerator = mock(IntGenerator.class);
+        when(mockGenerator.nextInt(3)).thenReturn(2, 1);
+        LoremIpsumText cut = new LoremIpsumText(StringUtils.join(words, ' '), mockGenerator);
+        cut.nextWord();
+        assertThat(words.get(1), equalTo(cut.nextWord()));
+    }
+
+    @Test
+    public void getWord_ManyWordsReverseSequencer_ReturnsFirstOnLastCall() {
         List<String> words = new ArrayList<String>(Arrays.asList(new String[]{"lorem", "ipsum", "dolor"}));
         IntGenerator mockGenerator = mock(IntGenerator.class);
         when(mockGenerator.nextInt(3)).thenReturn(2, 1, 0);
         LoremIpsumText cut = new LoremIpsumText(StringUtils.join(words, ' '), mockGenerator);
-        for (String expected : words) {
-            assertThat(expected, equalTo(cut.nextWord()));
-        }
+        cut.nextWord();
+        cut.nextWord();
+        assertThat(words.get(0), equalTo(cut.nextWord()));
     }
 }
