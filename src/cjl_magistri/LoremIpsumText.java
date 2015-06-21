@@ -8,11 +8,13 @@ package cjl_magistri;
  * To change this template use File | Settings | File Templates.
  */
 public class LoremIpsumText {
+    private final String _source;
+
     public LoremIpsumText(String textSource) {
-        //To change body of created methods use File | Settings | File Templates.
+        _source = textSource;
     }
 
     public String nextWord() {
-        return null;  //To change body of created methods use File | Settings | File Templates.
+        return _source;
     }
 }
