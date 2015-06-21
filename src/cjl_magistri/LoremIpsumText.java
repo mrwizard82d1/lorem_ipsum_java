@@ -10,7 +10,7 @@ package cjl_magistri;
 public class LoremIpsumText {
     private final String _source;
 
-    public LoremIpsumText(String textSource) {
+    public LoremIpsumText(String textSource, IntGenerator mockGenerator) {
         _source = textSource;
     }
 
